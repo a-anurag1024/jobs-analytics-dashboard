@@ -1,0 +1,1 @@
+a simple streamlit powered dashboard to visualize the collected and processed LinkedIN jobs data
