@@ -8,9 +8,17 @@ class BasePlotter(ABC):
         self.plots_list = []
     
     
-    def return_plots(self, df: pd.DataFrame):
+    @abstractmethod
+    def process_df(self):
+        """
+        Process the dfs and cache them for plotting
+        """
+        pass
+    
+    
+    def generate_plots(self):
         plots = []
         for plot in self.plots_list:
-            fig = plot(df)
+            fig = plot()
             plots.append(fig)
         return plots
