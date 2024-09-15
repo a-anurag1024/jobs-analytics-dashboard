@@ -8,15 +8,22 @@ class DataFetcher:
         self.db = DBConnector(creds).conn
 
 
-    # to do: join this table with the scrolled_jobs table to get additional jobs information
     def fetch_jobs_bw_dates(self, 
                             start_date: date, 
                             end_date: date) -> pd.DataFrame:
-        query = "SELECT entry_date, job_id, seniority_level, employment_type, job_function, industries FROM jobs WHERE entry_date BETWEEN '{}' AND '{}'".format(start_date, end_date)
+        #query = "SELECT entry_date, job_id, seniority_level, employment_type, job_function, industries FROM jobs WHERE entry_date BETWEEN '{}' AND '{}'".format(start_date, end_date)
+        query = """
+        SELECT j1.entry_date, j1.job_id, j1.seniority_level, j1.employment_type, j1.job_function, j1.industries, 
+        j2.job_title, j2.company, j2.location FROM jobs j1
+        JOIN scrolled_jobs j2 ON j1.job_id = j2.job_id
+        WHERE j1.entry_date BETWEEN '{}' AND '{}'
+        """.format(start_date, end_date)
+        
         cursor = self.db.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
-        df = pd.DataFrame(data, columns=["entry_date", "job_id", "seniority_level", "employment_type", "job_function", "industries"])
+        df = pd.DataFrame(data, columns=["entry_date", "job_id", "seniority_level", "employment_type", "job_function", "industries",
+                                         "job_title", "company", "location"])
         return df
     
     
