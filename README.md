@@ -26,3 +26,13 @@ pip install -e .
 ```bash
 streamlit run app.py
 ```
+
+
+## A Note on the Skills Ranking Weightage adjustment
+
+-   While extracting the top 10 skills from a job post, the LLM was asked to rank the skills (most relevant to least relevant) using the contextual information in the job post.
+-   The given Ranking Weightage adjustment is given to decide how much of relevance this ranking given by the LLM needs to be considered. 
+-    A value of 0 will give no relevance to the ranking and a value of 1 will give highest possible relevance to the ranking.
+-   This adjustment is used to calculate the weightage of an occurence of a skill in a job post as:-
+$$ \text{Skill Weightage} = 1 - \left( \text{skill rank} - 1 \right) \times \text{Skill Ranking Weightage} \times 0.1 $$
+
