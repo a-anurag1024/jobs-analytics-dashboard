@@ -54,7 +54,6 @@ env/*
 *.jpg
 *.jpeg
 *.png
-*.gif
 *.tif
 *.tiff
 *.eps
